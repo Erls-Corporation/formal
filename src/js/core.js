@@ -8,18 +8,13 @@ module.exports = new Class({
 
 	/**
 	 * Instantiate a new form
+	 * @param {Element} el Form element to build the form in
 	 * @param {Object} spec Specification of how the form should look
 	 */
-	initialize: function(element, spec){
-		this.form = document.id(element);
+	initialize: function(el, spec){
+		this.form = document.id(el);
 		this.spec = spec;
-		this.parseSpec();
-	},
 
-	/**
-	 * Parse the provided spec
-	 */
-	parseSpec: function(){
 		Array.each(this.spec, function(group){
 			new groupTypes[group.type](this.form, group);
 		}, this);
