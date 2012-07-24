@@ -1,5 +1,7 @@
 // author: Chiel Kunkels (@chielkunkels)
 
+var fieldTypes = require('./../fieldtypes');
+
 module.exports = new Class({
 	/**
 	 * Create a new element group
@@ -17,7 +19,19 @@ module.exports = new Class({
 		if (this.spec.title) {
 			this.legend = new Element('legend', {
 				text: this.spec.title
-			}).inject(this.fieldset);
+			}).inject(this.fieldset, 'top');
 		}
+
+		Array.each(this.spec.elements, function(field){
+			new fieldTypes[field.type](this.list, field);
+		}, this);
+	},
+
+	/**
+	 * Remove a group from the dom
+	 */
+	destroy: function(){
+		this.fieldset.destroy();
 	}
 });
+
