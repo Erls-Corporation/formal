@@ -1,8 +1,6 @@
 // author: Chiel Kunkels (@chielkunkels)
 
-var groupTypes = {
-	main: require('./groups/main.js')
-};
+var groupTypes = require('./grouptypes');
 
 module.exports = new Class({
 
