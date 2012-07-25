@@ -1,8 +1,9 @@
 // author: Chiel Kunkels (@chielkunkels)
 
-var groupTypes; // gets required in initialise due to cyclic dependancy
+var Base = require('./base');
 
 module.exports = new Class({
+	Extends: Base,
 	/**
 	 * Create a new field
 	 * @param {Element} wrapper Parent element to inject into
@@ -23,29 +24,9 @@ module.exports = new Class({
 		).inject(wrapper);
 
 		if (this.spec.dependancies && Object.keys(this.spec.dependancies).length) {
-			groupTypes = groupTypes || require('./../grouptypes')
 			this.activeGroups = [];
 			this.input.addEvent('input', this.checkDependancies.bind(this));
 			this.checkDependancies();
-		}
-	},
-
-	/**
-	 *
-	 */
-	checkDependancies: function(){
-		var self = this, value = this.input.get('value');
-		if (value in this.spec.dependancies) {
-			Array.each(this.spec.dependancies[value], function(group){
-				self.activeGroups.push(new groupTypes[group.type](self.li, group));
-			});
-		} else {
-			var group;
-			while (this.activeGroups.length) {
-				group = this.activeGroups.pop();
-				group.destroy();
-				delete group;
-			}
 		}
 	}
 });
