@@ -1,6 +1,7 @@
 // author: Chiel Kunkels (@chielkunkels)
 
 module.exports = {
-	text: require('./fields/text')
+	text: require('./fields/text'),
+	select: require('./fields/select')
 };
 
