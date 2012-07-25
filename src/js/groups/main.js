@@ -23,7 +23,11 @@ module.exports = new Class({
 		}
 
 		Array.each(this.spec.elements, function(field){
-			new fieldTypes[field.type](this.list, field);
+			if (field.type in fieldTypes) {
+				new fieldTypes[field.type](this.list, field);
+			} else {
+				console.warn('Field type '+field.type+' does not exist.');
+			}
 		}, this);
 	},
 
