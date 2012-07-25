@@ -24,24 +24,28 @@ module.exports = new Class({
 
 		if (this.spec.dependancies && Object.keys(this.spec.dependancies).length) {
 			groupTypes = groupTypes || require('./../grouptypes')
-			var triggers = Object.keys(this.spec.dependancies),
-				self = this, value, activeGroups = [];
+			this.activeGroups = [];
+			this.input.addEvent('input', this.checkDependancies.bind(this));
+			this.checkDependancies();
+		}
+	},
 
-			this.input.addEvent('input', function(e){
-				value = self.input.get('value');
-				if (value in self.spec.dependancies) {
-					Array.each(self.spec.dependancies[value], function(group){
-						activeGroups.push(new groupTypes[group.type](self.li, group));
-					});
-				} else {
-					var group;
-					while (activeGroups.length) {
-						group = activeGroups.shift();
-						group.destroy();
-						delete group;
-					}
-				}
+	/**
+	 *
+	 */
+	checkDependancies: function(){
+		var self = this, value = this.input.get('value');
+		if (value in this.spec.dependancies) {
+			Array.each(this.spec.dependancies[value], function(group){
+				self.activeGroups.push(new groupTypes[group.type](self.li, group));
 			});
+		} else {
+			var group;
+			while (this.activeGroups.length) {
+				group = this.activeGroups.pop();
+				group.destroy();
+				delete group;
+			}
 		}
 	}
 });
