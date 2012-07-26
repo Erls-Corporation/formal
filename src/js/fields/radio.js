@@ -17,7 +17,7 @@ module.exports = new Class({
 			this.label = new Element('label', {
 				text: this.spec.label || null
 			}),
-			this.fieldset = new Element('fieldset.radio_buttons').adopt(
+			this.fieldset = new Element('fieldset.radiobuttons').adopt(
 				this.list = new Element('ul')
 			)
 		);
