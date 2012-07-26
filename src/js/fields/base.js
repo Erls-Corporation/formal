@@ -9,19 +9,26 @@ module.exports = new Class({
 	checkDependancies: function(){
 		groupTypes = groupTypes || require('./../grouptypes');
 
-		var self = this, value = this.input.get('value');
+		var group;
+		while (this.activeGroups.length) {
+			group = this.activeGroups.pop();
+			group.destroy();
+			delete group;
+		}
+
+		var self = this, value = this.getValue();
 		if (value in this.spec.dependancies) {
 			Array.each(this.spec.dependancies[value], function(group){
 				self.activeGroups.push(new groupTypes[group.type](self.li, group));
 			});
-		} else {
-			var group;
-			while (this.activeGroups.length) {
-				group = this.activeGroups.pop();
-				group.destroy();
-				delete group;
-			}
 		}
+	},
+
+	/**
+	 * Get the value of this field
+	 */
+	getValue: function(){
+		return this.input.get('value');
 	}
 });
 
