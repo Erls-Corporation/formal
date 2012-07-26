@@ -16,6 +16,7 @@ module.exports = new Class({
 		if (typeOf(values) !== 'array') {
 			values = [values];
 		}
+		values.push(values.join(','));
 
 		while (this.activeGroups.length) {
 			this.activeGroups.pop().detach();
