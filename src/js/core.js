@@ -16,7 +16,7 @@ module.exports = new Class({
 		this.spec = spec;
 
 		Array.each(this.spec, function(group){
-			new groupTypes[group.type](this.form, group);
+			new groupTypes[group.type](this.form, group).attach();
 		}, this);
 	}
 });

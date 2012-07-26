@@ -14,7 +14,7 @@ module.exports = new Class({
 
 		this.fieldset = new Element('fieldset.group').adopt(
 			this.list = new Element('ul')
-		).inject(this.wrapper);
+		);
 
 		if (this.spec.title) {
 			this.legend = new Element('legend', {
@@ -29,6 +29,20 @@ module.exports = new Class({
 				console.warn('Field type '+field.type+' does not exist.');
 			}
 		}, this);
+	},
+
+	/**
+	 *
+	 */
+	detach: function(){
+		this.fieldset.dispose();
+	},
+
+	/**
+	 *
+	 */
+	attach: function(){
+		this.fieldset.inject(this.wrapper);
 	},
 
 	/**

@@ -16,10 +16,12 @@ module.exports = new Class({
 			delete group;
 		}
 
-		var self = this, value = this.getValue();
+		var self = this, value = this.getValue(), groupObj;
 		if (value in this.spec.dependancies) {
 			Array.each(this.spec.dependancies[value], function(group){
-				self.activeGroups.push(new groupTypes[group.type](self.li, group));
+				groupObj = new groupTypes[group.type](self.li, group)
+				groupObj.attach();
+				self.activeGroups.push(groupObj);
 			});
 		}
 	},
