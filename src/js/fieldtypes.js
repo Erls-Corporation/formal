@@ -3,6 +3,7 @@
 module.exports = {
 	text: require('./fields/text'),
 	select: require('./fields/select'),
-	radio: require('./fields/radio')
+	radio: require('./fields/radio'),
+	checkbox: require('./fields/checkbox')
 };
 
