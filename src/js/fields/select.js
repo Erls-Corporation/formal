@@ -28,7 +28,8 @@ module.exports = new Class({
 				option = this.spec.options[i];
 				new Element('option', {
 					text: option.label,
-					value: option.value
+					value: option.value,
+					selected: this.spec.defaultValue && this.spec.defaultValue === option.value
 				}).inject(this.input);
 			}
 		}

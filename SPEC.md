@@ -72,14 +72,21 @@ Example field specification:
 	"id": "firstName",
 	"name": "firstName",
 	"multiple": false,
-	"options": {
-		"key1": "value1",
-		"key2": "value2"
-	},
+	"options": [{
+		"label": "Value 1",
+		"value": "key1"
+	}, {
+		"label": "Value 2",
+		"value": "key2"
+	}],
 	"defaultValue": "key1"
 }
 ```
 
+- The reason options is an array of objects, rather than just an object with all
+	options as key:value pairs, is because browsers are inconsistent when it comes
+	to how objects are ordered. Arrays, however, are always ordered in the order
+	they are specified.
 - **Multiple-value select boxes:** If you have `multiple: true` specified,
 	`defaultValue` can also be specified as an array of keys.
 - `defaultValue` can also be false -- or omitted entirely -- if an empty
