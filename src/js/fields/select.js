@@ -13,12 +13,15 @@ module.exports = new Class({
 		this.wrapper = wrapper;
 		this.spec = spec;
 
+		var multiple = 'multiple' in this.spec && this.spec.multiple === true;
+
 		this.li = new Element('li').adopt(
 			this.label = new Element('label', {
 				text: this.spec.label || null
 			}),
 			this.input = new Element('select', {
-				name: this.spec.name || null
+				name: this.spec.name ? this.spec.name+(multiple ? '[]' : '') : null,
+				multiple: multiple
 			})
 		);
 
@@ -41,5 +44,13 @@ module.exports = new Class({
 			this.input.addEvent('change', this.checkDependancies.bind(this));
 			this.checkDependancies();
 		}
+	},
+
+	/**
+	 * Get the value of this field
+	 */
+	getValue: function(){
+		return this.input.getElements(':selected').get('value');
 	}
 });
+
