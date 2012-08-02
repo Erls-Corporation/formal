@@ -19,9 +19,20 @@ module.exports = new Class({
 			}),
 			this.input = new Element('input', {
 				value: this.spec.defaultValue || null,
-				name: this.spec.name || null
+				name: this.spec.name || null,
 			})
-		).inject(wrapper);
+		);
+
+		if (this.spec.required && this.spec.required === true) {
+			this.input.set('required', '');
+		}
+
+		if (this.spec.validator && typeOf(this.spec.validator) === 'object') {
+			this.input.set('pattern', this.spec.validator.regex);
+			this.input.set('title', this.spec.validator.pattern);
+		}
+
+		this.li.inject(wrapper);
 
 		if (this.spec.dependancies && Object.keys(this.spec.dependancies).length) {
 			this.activeGroups = [];
