@@ -1,15 +1,16 @@
 // author: Chiel Kunkels (@chielkunkels)
 
-var fieldTypes = require('./../fieldtypes');
+var fields = require('./../fields');
 
-module.exports = new Class({
+exports = module.exports = new Class({
+
 	/**
 	 * Create a new element group
-	 * @param {Element} wrapper Parent element to inject into
+	 * @param {Element} root Parent element to inject into
 	 * @param {Object} spec Specification of the group
 	 */
-	initialize: function(wrapper, spec){
-		this.wrapper = wrapper;
+	initialize: function(root, spec){
+		this.root = root;
 		this.spec = spec;
 
 		this.fieldset = new Element('fieldset.group').adopt(
@@ -23,10 +24,11 @@ module.exports = new Class({
 		}
 
 		Array.each(this.spec.elements, function(field){
-			if (field.type in fieldTypes) {
-				new fieldTypes[field.type](this.list, field);
-			} else {
-				console.warn('Field type '+field.type+' does not exist.');
+			try {
+				new (fields.fetch(field.type))(this.list, field);
+			} catch (e) {
+				console.warn(e.message);
+				return;
 			}
 		}, this);
 	},
@@ -42,7 +44,7 @@ module.exports = new Class({
 	 *
 	 */
 	attach: function(){
-		this.fieldset.inject(this.wrapper);
+		this.fieldset.inject(this.root);
 	},
 
 	/**

@@ -1,38 +1,117 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
-var groupTypes = require('./grouptypes');
+var pages = require('./pages');
 
-module.exports = new Class({
-
-	Implements: Events,
+exports = module.exports = new Class({
+	activePage: -1,
+	builtPages: {},
 
 	/**
 	 * Instantiate a new form
-	 * @param {Element} el Form element to build the form in
+	 * @param {Element} root Element to build the form into
 	 * @param {Object} spec Specification of how the form should look
 	 */
-	initialize: function(el, spec){
-		this.wrapper = document.id(el);
-		this.form = this.wrapper.get('tag') === 'form' ? this.wrapper : this.wrapper.getParent('form');
+	initialize: function(root, spec){
+		this.form = document.id(root);
 		this.spec = spec;
 
-		var self = this;
-		this.form.addEvent('submit', function(e){
-			if (!self.isValid()) {
-				e.preventDefault();
-			}
-		});
+		this.wrapper = new Element('div.pages').inject(this.form);
 
-		Array.each(this.spec, function(group){
-			new groupTypes[group.type](this.wrapper, group).attach();
-		}, this);
+		this.pageCount = this.spec.length;
+		if (this.pageCount > 1) {
+			this.buildPaging();
+		}
+
+		this.showPage(0);
 	},
 
 	/**
-	 * Check if the form is valid, according to the supplied spec
+	 * Build up paging
 	 */
-	isValid: function(){
-		return false;
+	buildPaging: function(){
+		var i = 0, self = this, href;
+		this.pager = new Element('nav').adopt(
+			this.pageList = new Element('ul').adopt(
+				new Element('li').adopt(
+					new Element('a[href=#previous]', {text: 'Previous'})
+				),
+				new Element('li').adopt(
+					new Element('a[href=#next]', {text: 'Next'})
+				)
+			)
+		).addEvent('click:relay(a)', function(e){
+			e.preventDefault();
+			href = e.target.get('href');
+			if (href === '#previous') {
+				self.previous();
+			} else if (href === '#next') {
+				self.next();
+			}
+		});
+		this.pager.inject(this.form);
+	},
+
+	/**
+	 * Show page by index
+	 * @param {Number} index Page index to show
+	 */
+	showPage: function(index){
+		index = parseInt(index, 0);
+		if (typeOf(index) !== 'number') {
+			return;
+		}
+
+		if (index < 0 || index > (this.pageCount - 1)) {
+			return;
+		}
+
+		if (!(index in this.builtPages)) {
+			try {
+				this.builtPages[index] = new (pages.fetch(this.spec[index].type))(this.wrapper, this.spec[index]);
+			} catch (e) {
+				console.warn(e.message);
+				return;
+			}
+		}
+
+		if (this.activePage >= 0) {
+			this.hidePage(this.activePage);
+		}
+
+		this.builtPages[index].show();
+		this.activePage = index;
+	},
+
+	/**
+	 * Hide a page by index
+	 * @param {Number} index Page index to show
+	 */
+	hidePage: function(index){
+		index = parseInt(index, 0);
+		if (typeOf(index) !== 'number') {
+			return;
+		}
+
+		if (!(index in this.builtPages)) {
+			return;
+		}
+
+		this.builtPages[index].hide();
+	},
+
+	/**
+	 * Go to the previous page
+	 */
+	previous: function(){
+		this.showPage(this.activePage - 1);
+	},
+
+	/**
+	 * Go to the next page
+	 */
+	next: function(){
+		this.showPage(this.activePage + 1);
 	}
 });
 

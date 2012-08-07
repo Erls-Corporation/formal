@@ -1,8 +1,9 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
 var Base = require('./base');
 
-module.exports = new Class({
+exports = module.exports = new Class({
 	Extends: Base,
 	/**
 	 * Create a new field

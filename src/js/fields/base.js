@@ -1,8 +1,9 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
-var groupTypes; // gets required in initialise due to cyclic dependancy
+var groups = require('./../groups');
 
-module.exports = new Class({
+exports = module.exports = new Class({
 	activeGroups: [],
 	builtGroups: {},
 
@@ -10,8 +11,6 @@ module.exports = new Class({
 	 * Check if any dependancies should be triggered
 	 */
 	checkDependancies: function(){
-		groupTypes = groupTypes || require('./../grouptypes');
-
 		var self = this, values = this.getValue(), key, value;
 		if (typeOf(values) !== 'array') {
 			values = [values];
@@ -28,7 +27,11 @@ module.exports = new Class({
 				if (!(value in this.builtGroups)) {
 					this.builtGroups[value] = [];
 					Array.each(this.spec.dependancies[value], function(group){
-						self.builtGroups[value].push(new groupTypes[group.type](self.li, group));
+						try {
+							self.builtGroups[value].push(new (groups.fetch(group.type))(self.li, group));
+						} catch(e) {
+							console.warn(e.message);
+						}
 					});
 				}
 				Array.each(this.builtGroups[value], function(group){
