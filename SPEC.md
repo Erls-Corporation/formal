@@ -10,11 +10,12 @@ A sample formal spec would look like this:
 
 ```json
 [{
+	"type": "main",
 	"title": "Page 1",
 	"groups": [{
 		"type": "main",
 		"title": "Group 1",
-		"elements": [{
+		"fields": [{
 			"type": "text",
 			"name": "firstName"
 		}, {
@@ -54,9 +55,9 @@ questions.
 
 ## Fields
 
-Within each group, there's an `elements` property. This holds the description
-for each field being used. Below you'll find a list of all field types, and how
-they are built up.
+Within each group, there's an `fields` property. This holds the description for
+each field being used. Below you'll find a list of all field types, and how they
+are built up.
 
 ### Options
 

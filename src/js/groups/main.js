@@ -23,7 +23,7 @@ exports = module.exports = new Class({
 			}).inject(this.fieldset, 'top');
 		}
 
-		Array.each(this.spec.elements, function(field){
+		Array.each(this.spec.fields, function(field){
 			try {
 				new (fields.fetch(field.type))(this.list, field);
 			} catch (e) {
