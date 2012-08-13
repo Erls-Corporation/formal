@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Formal Test</title>
+	</head>
+
+	<body>
+		<form method="post" action="#" id="formal-test"></form>
+		<script type="formal/data" id="formal-data">[{
+			"type": "main",
+			"title": "Page 1",
+			"groups": [{
+				"type": "main",
+				"title": "Page 1, Group 1",
+				"fields": [{
+					"type": "text",
+					"label": "First name"
+				}, {
+					"type": "text",
+					"label": "Last name"
+				}]
+			}]
+		}, {
+			"type": "main",
+			"title": "Page 2",
+			"groups": [{
+				"type": "main",
+				"title": "Page 2, Group 1",
+				"fields": [{
+					"type": "text",
+					"label": "Test"
+				}]
+			}]
+		}]</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+		<script src="formal.js"></script>
+		<script>
+			Formal.init('formal-test', JSON.parse($('formal-data').get('html')));
+		</script>
+	</body>
+</html>
