@@ -6,10 +6,9 @@ var pages = require('./pages'),
 	fields = require('./fields'),
 	Core = require('./core');
 
+// Register stuff built into Formal
 pages.register('main', require('./pages/main'));
-
 groups.register('main', require('./groups/main'));
-
 fields.register('text', require('./fields/text'));
 fields.register('select', require('./fields/select'));
 fields.register('radio', require('./fields/radio'));

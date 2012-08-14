@@ -1,9 +1,14 @@
 // author: Chiel Kunkels (@chielkunkels)
 'use strict';
 
+/**
+ * Allows for creating new factory-like objects which can store types
+ * and return them for instantiation
+ */
 exports = module.exports = new Class({
 	/**
-	 *
+	 * Create a new factory for a type
+	 * @param {String} typeName Name of the type
 	 */
 	initialize: function(typeName){
 		this.typeName = typeName;
@@ -22,8 +27,8 @@ exports = module.exports = new Class({
 	/**
 	 * Fetch a group of a certain type
 	 * @param {String} type Type of group
-	 * @throws
 	 * @return {Object} Definition of the group
+	 * @throws {Error} If the type could not be found
 	 */
 	fetch: function(type){
 		if (!type || !(type in this.types)) {

@@ -34,14 +34,14 @@ exports = module.exports = new Class({
 	},
 
 	/**
-	 *
+	 * Remove the group from the DOM
 	 */
 	detach: function(){
 		this.fieldset.dispose();
 	},
 
 	/**
-	 *
+	 * Inject the group into the DOM
 	 */
 	attach: function(){
 		this.fieldset.inject(this.root);

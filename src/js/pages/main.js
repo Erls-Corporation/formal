@@ -7,6 +7,8 @@ exports = module.exports = new Class({
 
 	/**
 	 * Create a new page
+	 * @param {Element} root Element to build the page in
+	 * @param {Object} spec Spec to build the page to
 	 */
 	initialize: function(root, spec){
 		this.root = root;
