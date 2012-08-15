@@ -1,4 +1,5 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
 var fields = require('./../fields');
 

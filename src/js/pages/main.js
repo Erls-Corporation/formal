@@ -1,4 +1,5 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
 var groups = require('./../groups'),
 	pageId = 1;

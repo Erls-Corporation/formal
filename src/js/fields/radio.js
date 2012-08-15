@@ -1,9 +1,11 @@
 // author: Chiel Kunkels (@chielkunkels)
+'use strict';
 
 var Base = require('./base');
 
 module.exports = new Class({
 	Extends: Base,
+
 	/**
 	 * Create a new field
 	 * @param {Element} wrapper Parent element to inject into
@@ -25,7 +27,7 @@ module.exports = new Class({
 		this.inputs = $$();
 
 		if (typeOf(this.spec.options) === 'array') {
-			var length = this.spec.options.length, i = 0, options, input;
+			var length = this.spec.options.length, i = 0, option, input;
 			for (; i < length; i++) {
 				option = this.spec.options[i];
 				new Element('li').adopt(
@@ -45,10 +47,10 @@ module.exports = new Class({
 
 		this.li.inject(wrapper);
 
-		if (typeOf(this.spec.dependancies) === 'object' && Object.keys(this.spec.dependancies).length) {
+		if (typeOf(this.spec.dependencies) === 'object' && Object.keys(this.spec.dependencies).length) {
 			this.activeGroups = [];
-			this.inputs.addEvent('change', this.checkDependancies.bind(this));
-			this.checkDependancies();
+			this.inputs.addEvent('change', this.checkDependencies.bind(this));
+			this.checkDependencies();
 		}
 	},
 

@@ -5,6 +5,7 @@ var Base = require('./base');
 
 exports = module.exports = new Class({
 	Extends: Base,
+
 	/**
 	 * Create a new field
 	 * @param {Element} wrapper Parent element to inject into
@@ -20,7 +21,7 @@ exports = module.exports = new Class({
 			}),
 			this.input = new Element('input', {
 				value: this.spec.defaultValue || null,
-				name: this.spec.name || null,
+				name: this.spec.name || null
 			})
 		);
 
@@ -35,10 +36,10 @@ exports = module.exports = new Class({
 
 		this.li.inject(wrapper);
 
-		if (this.spec.dependancies && Object.keys(this.spec.dependancies).length) {
+		if (this.spec.dependencies && Object.keys(this.spec.dependencies).length) {
 			this.activeGroups = [];
-			this.input.addEvent('input', this.checkDependancies.bind(this));
-			this.checkDependancies();
+			this.input.addEvent('input', this.checkDependencies.bind(this));
+			this.checkDependencies();
 		}
 	}
 });

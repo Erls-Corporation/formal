@@ -8,9 +8,9 @@ exports = module.exports = new Class({
 	builtGroups: {},
 
 	/**
-	 * Check if any dependancies should be triggered
+	 * Check if any dependencies should be triggered
 	 */
-	checkDependancies: function(){
+	checkDependencies: function(){
 		var self = this, values = this.getValue(), key, value;
 		if (typeOf(values) !== 'array') {
 			values = [values];
@@ -23,10 +23,10 @@ exports = module.exports = new Class({
 
 		while(values.length) {
 			value = values.shift();
-			if (value in this.spec.dependancies) {
+			if (value in this.spec.dependencies) {
 				if (!(value in this.builtGroups)) {
 					this.builtGroups[value] = [];
-					Array.each(this.spec.dependancies[value], function(group){
+					Array.each(this.spec.dependencies[value], function(group){
 						try {
 							self.builtGroups[value].push(new (groups.fetch(group.type))(self.li, group));
 						} catch(e) {
