@@ -22,11 +22,13 @@ exports = module.exports = new Class({
 	 * Check if any dependencies should be triggered
 	 */
 	checkDependencies: function(){
-		var self = this, values = this.getValue(), key, value;
+		var values = this.getValue(), key, value, i, group;
 		if (typeOf(values) !== 'array') {
 			values = [values];
 		}
-		values.push(values.join(','));
+		if (values.length > 1) {
+			values.push(values.join(','));
+		}
 
 		while (this.activeGroups.length) {
 			this.activeGroups.pop().detach();
@@ -35,20 +37,25 @@ exports = module.exports = new Class({
 		while(values.length) {
 			value = values.shift();
 			if (value in this.spec.dependencies) {
+				console.log('in group', this.spec.dependencies);
 				if (!(value in this.builtGroups)) {
+					console.log('not built yet');
 					this.builtGroups[value] = [];
-					Array.each(this.spec.dependencies[value], function(group){
+					for (i = 0; i < this.spec.dependencies[value].length; i++) {
+						group = this.spec.dependencies[value][i];
+						console.log(group);
 						try {
-							self.builtGroups[value].push(new (groups.fetch(group.type))(self.li, group));
+							this.builtGroups[value].push(new (groups.fetch(group.type))(this.li, group));
 						} catch(e) {
 							console.warn(e.message);
 						}
-					});
+					}
 				}
-				Array.each(this.builtGroups[value], function(group){
-					self.activeGroups.push(group);
+				for (i = 0; i < this.builtGroups[value].length; i++) {
+					group = this.builtGroups[value][i];
+					this.activeGroups.push(group);
 					group.attach();
-				});
+				}
 			}
 		}
 	},
