@@ -14,7 +14,11 @@ exports = module.exports = new Class({
 	build: function(){
 		this.page = new Element('section.page.page-'+(pageId++), {
 			styles: { display: 'none' }
-		}).inject(this.root);
+		});
+
+		if (this.spec.title && typeOf(this.spec.title) === 'string') {
+			new Element('h2', {text: this.spec.title}).inject(this.page);
+		}
 
 		Array.each(this.spec.groups, function(group){
 			try {
@@ -24,6 +28,8 @@ exports = module.exports = new Class({
 				return;
 			}
 		}, this);
+
+		this.page.inject(this.root);
 	}
 });
 
