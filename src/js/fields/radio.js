@@ -7,14 +7,9 @@ module.exports = new Class({
 	Extends: Base,
 
 	/**
-	 * Create a new field
-	 * @param {Element} wrapper Parent element to inject into
-	 * @param {Object} spec Specification of the field
+	 * Build the field
 	 */
-	initialize: function(wrapper, spec){
-		this.wrapper = wrapper;
-		this.spec = spec;
-
+	build: function(){
 		this.li = new Element('li').adopt(
 			this.label = new Element('label', {
 				text: this.spec.label || null
@@ -45,7 +40,7 @@ module.exports = new Class({
 			}
 		}
 
-		this.li.inject(wrapper);
+		this.li.inject(this.root);
 
 		if (typeOf(this.spec.dependencies) === 'object' && Object.keys(this.spec.dependencies).length) {
 			this.activeGroups = [];

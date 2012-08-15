@@ -8,6 +8,17 @@ exports = module.exports = new Class({
 	builtGroups: {},
 
 	/**
+	 * Create a new field
+	 * @param {Element} root Parent element to inject into
+	 * @param {Object} spec Specification of the field
+	 */
+	initialize: function(root, spec){
+		this.root = root;
+		this.spec = spec;
+		this.build();
+	},
+
+	/**
 	 * Check if any dependencies should be triggered
 	 */
 	checkDependencies: function(){
