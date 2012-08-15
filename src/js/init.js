@@ -4,7 +4,7 @@
 var pages = require('./pages'),
 	groups = require('./groups'),
 	fields = require('./fields'),
-	Core = require('./core');
+	Formal = require('./core');
 
 // Register stuff built into Formal
 pages.register('main', require('./pages/main'));
@@ -25,13 +25,15 @@ window.Formal = {
 	 * @return {Object} A new Formal instance
 	 */
 	init: function(root, spec){
-		return new Core(root, spec);
+		return new Formal(root, spec);
 	},
 
 	/**
 	 * Base types which can be used to extend custom types
 	 */
 	Bases: {
+		Page: require('./pages/base'),
+		Group: require('./groups/base'),
 		Field: require('./fields/base')
 	},
 

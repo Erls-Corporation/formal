@@ -1,27 +1,24 @@
 // author: Chiel Kunkels (@chielkunkels)
 'use strict';
 
-var fields = require('./../fields');
+var Base = require('./base'),
+	fields = require('./../fields');
 
 exports = module.exports = new Class({
+	Extends: Base,
 
 	/**
-	 * Create a new element group
-	 * @param {Element} root Parent element to inject into
-	 * @param {Object} spec Specification of the group
+	 * Build up the group
 	 */
-	initialize: function(root, spec){
-		this.root = root;
-		this.spec = spec;
-
-		this.fieldset = new Element('fieldset.group').adopt(
+	build: function(){
+		this.group = new Element('fieldset.group').adopt(
 			this.list = new Element('ul')
 		);
 
 		if (this.spec.title) {
 			this.legend = new Element('legend', {
 				text: this.spec.title
-			}).inject(this.fieldset, 'top');
+			}).inject(this.group, 'top');
 		}
 
 		Array.each(this.spec.fields, function(field){
@@ -32,27 +29,6 @@ exports = module.exports = new Class({
 				return;
 			}
 		}, this);
-	},
-
-	/**
-	 * Remove the group from the DOM
-	 */
-	detach: function(){
-		this.fieldset.dispose();
-	},
-
-	/**
-	 * Inject the group into the DOM
-	 */
-	attach: function(){
-		this.fieldset.inject(this.root);
-	},
-
-	/**
-	 * Remove a group from the dom
-	 */
-	destroy: function(){
-		this.fieldset.destroy();
 	}
 });
 
